@@ -1,0 +1,12 @@
+
+Hi @baskaran sir,
+
+I just learned a lot things which values my work and life too yeah by both technically and discipline too.
+At start I don't have the mind to prioritise my tasks but I changed now and especially with your words I 
+changed my self I am finding my own bugs and updating my self. 
+
+With Technical topics and hands on sessions I learned a lot Before that I didn't tried 
+
+curl -X POST -u <UserName>:<Generated-Token>https://api.github.com/user/repos -d “{\”name\”: \”Demo_Repo\”}”
+
+curl -X POST -u <UserName>:<Generated-Token>https://api.github.com/user/repos -d “{\”name\”: \”Demo_Repo\”,\”description\”: \”This is first repo through API\”,\”homepage\”: \”https://github.com\”,\”public\”: \”true\”,\”has_issues\”: \”true\”,\”has_projects\”:\”true\”,\”has_wiki\”: \”true\”}”
