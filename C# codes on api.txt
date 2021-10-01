@@ -1,0 +1,85 @@
+1. Using PostASJonAsync
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ClassLibrary;                      // error : not found
+using System.Threading;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Http.Formatting;        //error : not found 
+using Newtonsoft.Json;                  // error : not found 
+
+namespace ConsoleAPP
+{
+    public class person
+    {
+        public string name { get; set; }
+        public string surname { get; set; }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            using (var client = new HttpClient())
+            {
+                person p = new person { name = "Steve", surname = "Jobs" };
+                client.BaseAddress = new Uri("http://localhost:1565/");
+                var response = client.PostAsJsonAsync("api/person", p).Result;   //error 
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.Write("Success");
+                }
+                else
+                    Console.Write("Error");
+            }
+        }
+    }
+}
+
+
+2. using Http response and request methods 
+
+using System;
+using System.Net.Http;
+using System.Web;
+using System.Net;
+using System.Threading;
+using System.Linq;
+using System.Collections.Generic;
+using System.IO;
+namespace consoleapp13.controllers
+{
+    class program
+    {
+        static void main(string[] args)
+        {
+            //var tokenauth = string.Format("https://github.com/settings/tokens/685728083");
+            var url = string.Format("https://api.github.com/user/aravintharajelumalai/repos?access_token=ghp_bztrvowniwkxrqycco1tfzvzvg1pdj3pzl6p");
+            WebRequest requestobjget = WebRequest.Create(url);
+            requestobjget.Method = "get";
+            HttpWebResponse responseobjget = null;
+            responseobjget = (HttpWebResponse)requestobjget.GetResponse();
+
+            string strresulttest = null;
+            using (Stream stream = responseobjget.GetResponseStream())
+            {
+                StreamReader sr = new StreamReader(stream);
+                strresulttest = sr.ReadToEnd();
+                sr.Close();
+            }
+            var newrepo = new newrepository("api1")                                    //error
+            {
+                            return new string[]{"name": "api1",
+                                "description": "repository created using c#",
+                                "homepage": "https://github.com",
+                                "private": false};}
+            }
+        }
+    }
+}
+
+
+3. 
