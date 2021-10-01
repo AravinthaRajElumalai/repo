@@ -1,0 +1,124 @@
+//Run Unit Test
+
+var target = Argument("target", (string)null);
+const string PATH_TO_SOLUTION = "TastyFormsApp.sln";
+const string PATH_TO_UNIT_TESTS_PROJECT = "TastyFormsApp.Tests/TastyFormsApp.Tests.csproj";
+ 
+Task("Clean")
+  .Does(() =>
+{
+  CleanDirectories("**/bin");
+  CleanDirectories("**/obj");
+});
+
+Task("Restore")
+  .Does(() =>
+{
+  NuGetRestore(PATH_TO_SOLUTION);
+});
+  
+Task("RunUnitTests")
+  .IsDependentOn("Clean")
+  .IsDependentOn("Restore")
+  .Does(() =>
+  {
+     var settings = new DotNetCoreTestSettings
+     {
+         Configuration = "Release",
+         ArgumentCustomization = args=>args.Append("--logger trx")
+     };
+ 
+      DotNetCoreTest(PATH_TO_UNIT_TESTS_PROJECT, settings);
+  });
+RunTarget(target);
+
+
+
+
+//Build a project
+
+
+
+
+
+var target = Argument("target", "Test");
+var configuration = Argument("configuration", "Release");
+
+Task("Clean")
+    .WithCriteria(c => HasArgument("rebuild"))
+    .Does(() =>
+{
+    CleanDirectory($"./src/Example/bin/{configuration}");
+});
+
+Task("Build")
+    .IsDependentOn("Clean")
+    .Does(() =>
+{
+    DotNetCoreBuild("./src/Example.sln", new DotNetCoreBuildSettings
+    {
+        Configuration = configuration,
+    });
+});
+
+Task("Test")
+    .IsDependentOn("Build")
+    .Does(() =>
+{
+    DotNetCoreTest("./src/Example.sln", new DotNetCoreTestSettings
+    {
+        Configuration = configuration,
+        NoBuild = true,
+    });
+});
+RunTarget(target);
+
+
+
+//build 2
+
+var target=Argument("Target","Default");
+var configuration=Argument("Configuration","Release");
+var distDirectory=Directory("./distination");
+
+Task("Clean").Does(() =>{ CleanDirectory(distDirectory); });
+Task("Restore")
+   .IsDependentOn("Clean")
+   .Does(() =>
+   {
+       DotNetCoreRestore();
+
+   });
+
+Task("Build")
+   .IsDependentOn("Clean")
+   .Does(() =>
+   {
+       DotNetCoreBuild("C:\Users\KavinKumarRajendran\Downloads\3.x\3.x\src\RazorPagesTestSample\RazorPagesTestSample.csproj",new
+         DotNetCoreBuildSettings(){
+             Configuration=configuration,
+             ArgumentCustomization=args => args.Append("--no-restore"),
+
+         });
+
+   });
+
+Task("Test")
+   .IsDependentOn("Build")
+   .Does(() =>
+   {
+       DotNetCoreTest("C:\Users\KavinKumarRajendran\Downloads\3.x\3.x\tests\RazorPagesTestSample.Tests\RazorPagesTestSample.Tests.csproj",new
+              new DotNetCoreTestSettings(){
+                  Configuration=configuration,
+                  NoBuild=true;
+                  ArgumentCustomization=args => args.Append("--no-restore"),
+
+            });
+
+   });
+
+Task("Default").IsDependentOn("Test");
+
+RunTarget(target);
+ 
+
