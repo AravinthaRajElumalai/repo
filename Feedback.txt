@@ -1,0 +1,4 @@
+curl -X POST -u <UserName>:<Generated-Token>https://api.github.com/user/repos -d “{\”name\”: \”Demo_Repo\”}”
+curl -X POST -u <UserName>:<Generated-Token>https://api.github.com/user/repos -d “{\”name\”: \”Demo_Repo\”,\”description\”: \”This is first repo through API\”,\”homepage\”: \”https://github.com\”,\”public\”: \”true\”,\”has_issues\”: \”true\”,\”has_projects\”:\”true\”,\”has_wiki\”: \”true\”}”
+start.FileName = @"cmd.exe";
+start.Arguments = "git config --global --unset http.proxy";
